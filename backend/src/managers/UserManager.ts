@@ -16,7 +16,6 @@ export class UserManager {
         this.roomManager = new RoomManager;
     }
     addUser(name: string, socket: Socket) {
-        console.log('addUser')
         this.users.push({ name, socket });
         this.queue.push(socket.id);
         socket.send("lobby");
@@ -30,12 +29,13 @@ export class UserManager {
     }
 
     clearQueue() {
-        console.log('clearQueue')
+        console.log('clearQueue', this.queue.length)
         if (this.queue.length < 2) {
             return;
         }
         const id1 = this.queue.pop();
         const id2 = this.queue.pop();
+        console.log("ids: " + id1 + " " + id2);
         const user1 = this.users.find(x => x.socket.id === id1);
         const user2 = this.users.find(x => x.socket.id === id2);
 
@@ -43,17 +43,22 @@ export class UserManager {
             return;
         }
         const room = this.roomManager.createRoom(user1, user2);
+        this.clearQueue();
     }
 
     initHandler(socket: Socket) {
         socket.on("offer", ({ sdp, roomId }: { sdp: string, roomId: string }) => {
             console.log('offer recieved');
-            this.roomManager.onOffer(roomId, sdp);
+            this.roomManager.onOffer(roomId, sdp, socket.id);
         })
         socket.on("answer", ({ sdp, roomId }: { sdp: string, roomId: string }) => {
             console.log('answer recieved');
-            this.roomManager.onAnswer(roomId, sdp);
+            this.roomManager.onAnswer(roomId, sdp, socket.id);
         })
+
+        socket.on("add-ice-candidate", ({candidate, roomId, type}) => {
+            this.roomManager.onIceCandidates(roomId, socket.id, candidate, type);
+        });
     }
 
 }
