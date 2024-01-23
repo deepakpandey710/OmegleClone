@@ -29,7 +29,7 @@ export class RoomManager {
     // deleteRoom(rooomId){
     //     this.rooms = this.rooms.f
     // }
-    onOffer(roomId: string, sdp: string, senderSocketid: string) {
+    onOffer(roomId: string, sdp: string, senderSocketid: string, name: string) {
         const room = this.rooms.get(roomId);
         if (!room) {
             return;
@@ -37,11 +37,12 @@ export class RoomManager {
         const receivingUser = room.user1.socket.id === senderSocketid ? room.user2 : room.user1;
         receivingUser?.socket.emit("offer", {
             sdp,
-            roomId
+            roomId,
+            name
         })
     }
 
-    onAnswer(roomId: string, sdp: string, senderSocketid: string) {
+    onAnswer(roomId: string, sdp: string, senderSocketid: string, name: string) {
         const room = this.rooms.get(roomId);
         if (!room) {
             return;
@@ -50,17 +51,18 @@ export class RoomManager {
 
         receivingUser?.socket.emit("answer", {
             sdp,
-            roomId
+            roomId,
+            name
         });
     }
 
-    onIceCandidates(roomId: string, senderSocketid: string, candidate: any, type: "sender" | "receiver") {
+    onIceCandidates(roomId: string, senderSocketid: string, candidate: any, type: "sender" | "receiver", name: string) {
         const room = this.rooms.get(roomId);
         if (!room) {
             return;
         }
         const receivingUser = room.user1.socket.id === senderSocketid ? room.user2 : room.user1;
-        receivingUser.socket.emit("add-ice-candidate", ({ candidate, type }));
+        receivingUser.socket.emit("add-ice-candidate", ({ candidate, type, name }));
     }
     generate() {
         return GLOBAL_ROOM_ID++;
