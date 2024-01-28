@@ -21,11 +21,8 @@ Designed the application with scalability in mind, optimizing performance to han
 5. Problem-solving and Troubleshooting:
 Demonstrated strong problem-solving skills by addressing technical challenges and ensuring the app's reliability. Conducted thorough testing and debugging to deliver a stable product.
 
-6. Collaborative Development:
-Worked collaboratively with a team of developers, designers, and other stakeholders, contributing to an agile development environment. Effectively communicated ideas and collaborated on decision-making processes.
-
-7. Continuous Learning:
+6. Continuous Learning:
 Stayed abreast of industry trends and emerging technologies, incorporating the latest advancements into the application to enhance functionality and user experience.
 
-8. Project Management:
+7. Project Management:
 Effectively managed the project lifecycle, from ideation to deployment, ensuring adherence to timelines and milestones. Coordinated with cross-functional teams to meet project objectives.
